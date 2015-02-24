@@ -6,19 +6,17 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
+use Guzzle\Swagger\SwaggerClient;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+require_once 'vendor/autoload.php';
 
 /**
  * Features context.
  */
 class FeatureContext extends BehatContext
 {
+    private $config, $client;
+
     /**
      * Initializes context.
      * Every scenario gets its own context object.
@@ -35,7 +33,8 @@ class FeatureContext extends BehatContext
      */
     public function aSwaggerClientConfiguration()
     {
-        throw new PendingException();
+        $this->config = array();
+        PHPUnit_Framework_Assert::assertNotNull($this->config, 'Setup Failed: The config variable should not be null');
     }
 
     /**
@@ -43,7 +42,15 @@ class FeatureContext extends BehatContext
      */
     public function theConfigurationHasAValidBase_url()
     {
-        throw new PendingException();
+        if (is_null($this->config)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a configuration object');
+        }
+
+        $this->config['base_url'] = 'http://example.org/api-docs';
+
+        $is_valid = (bool) filter_var($this->config['base_url'], FILTER_VALIDATE_URL);
+        PHPUnit_Framework_Assert::assertTrue($is_valid, 'The URL setup by this step is not valid');
+        PHPUnit_Framework_Assert::assertArrayHasKey('base_url', $this->config, 'The step failed to set a base_url on the configuration');
     }
 
     /**
@@ -51,6 +58,8 @@ class FeatureContext extends BehatContext
      */
     public function iCallSwaggerClientFactory()
     {
+        $config = $this->config;
+        $this->client = SwaggerClient::factory($config);
         throw new PendingException();
     }
 

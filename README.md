@@ -29,4 +29,4 @@ This library intends to follow a general BDD approach to development.  Behat is 
  - Offline tests
  - Grunt watch -- unit and features
  - Travis Build (?)
- 
+ - Research PSR-4 compliance
