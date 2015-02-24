@@ -24,6 +24,8 @@ This library intends to follow a general BDD approach to development.  Behat is 
  - Hello World stories and tests work
 
 ## TODOs
+ - @wip feature filtering (don't run them as part of the full suite)
+ - grunt-watch features
  - Offline tests
  - Grunt watch -- unit and features
  - Travis Build (?)
