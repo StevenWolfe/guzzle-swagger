@@ -1,6 +1,6 @@
 {
     "name": "StevenWolfe/Guzzle-Swagger",
-    "description": "",
+    "description": "A Guzzle Plugin for communicating with Swagger enabled Services",
     "type": "library",
     "keywords": ["Guzzle","Swagger"],
     "homepage": "https://github.com/StevenWolfe/guzzle-swagger",
