@@ -6,7 +6,8 @@
     "homepage": "https://github.com/StevenWolfe/guzzle-swagger",
     "license": "",
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "guzzlehttp/guzzle": "3.*"
     },
     "require-dev": {
       "phpunit/PHPUnit": "3.7.*",
