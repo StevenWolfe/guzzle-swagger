@@ -2,15 +2,15 @@
     "name": "StevenWolfe/Guzzle-Swagger",
     "description": "",
     "type": "library",
-    "keywords": [],
-    "homepage": "http://www.example.org/",
+    "keywords": ["Guzzle","Swagger"],
+    "homepage": "https://github.com/StevenWolfe/guzzle-swagger",
     "license": "",
     "require": {
-        "php": ">=5.3.3",
-        "phpunit/PHPUnit": "3.7.*",
-        "instaclick/php-code-sniffer": "dev-master"
+        "php": ">=5.3.3"
     },
     "require-dev": {
+      "phpunit/PHPUnit": "3.7.*",
+      "instaclick/php-code-sniffer": "dev-master"
     },
     "autoload": {
         "psr-0": {
