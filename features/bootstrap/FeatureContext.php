@@ -30,15 +30,18 @@ class FeatureContext extends BehatContext
         // Initialize your context here
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
+    /**
+     * @Given /^some scenario$/
+     */
+    public function someScenario()
+    {
+    }
+
+    /**
+     * @Then /^pass the feature$/
+     */
+    public function passTheFeature()
+    {
+        PHPUnit_Framework_Assert::assertTrue(true);
+    }
 }
