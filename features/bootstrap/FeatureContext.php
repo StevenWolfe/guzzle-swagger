@@ -15,7 +15,7 @@ require_once 'vendor/autoload.php';
  */
 class FeatureContext extends BehatContext
 {
-    private $config, $client;
+    private $config, $client, $exception;
 
     /**
      * Initializes context.
@@ -58,9 +58,16 @@ class FeatureContext extends BehatContext
      */
     public function iCallSwaggerClientFactory()
     {
+        // Reset these, just to be safe
+        unset($this->client);
+        unset($this->exception);
+
         $config = $this->config;
-        $this->client = SwaggerClient::factory($config);
-        throw new PendingException();
+        try {
+            $this->client = SwaggerClient::factory($config);
+        } catch (Exception $ex) {
+            $this->exception = $ex;
+        }
     }
 
     /**
@@ -68,7 +75,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldReceiveASwaggerClient()
     {
-        throw new PendingException();
+        PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\SwaggerClient', $this->client);
     }
 
     /**
@@ -76,7 +83,11 @@ class FeatureContext extends BehatContext
      */
     public function theConfigurationDoesNotHaveABase_url()
     {
-        throw new PendingException();
+        if (is_null($this->config)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a configuration object');
+        }
+
+        PHPUnit_Framework_Assert::assertArrayNotHasKey('base_url', $this->config, 'The configuration had a base_url upon completing this step');
     }
 
     /**
@@ -100,6 +111,14 @@ class FeatureContext extends BehatContext
      */
     public function theConfigurationHasAnInvalidBase_url()
     {
-        throw new PendingException();
+        if (is_null($this->config)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a configuration object');
+        }
+
+        $this->config['base_url'] = 'some_invalid_url';
+
+        $is_valid = (bool) filter_var($this->config['base_url'], FILTER_VALIDATE_URL);
+        PHPUnit_Framework_Assert::assertFalse($is_valid, 'The URL setup by this step should not be valid');
+        PHPUnit_Framework_Assert::assertArrayHasKey('base_url', $this->config, 'The step failed to set a base_url on the configuration');
     }
 }
