@@ -31,21 +31,6 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Given /^some scenario$/
-     */
-    public function someScenario()
-    {
-    }
-
-    /**
-     * @Then /^pass the feature$/
-     */
-    public function passTheFeature()
-    {
-        PHPUnit_Framework_Assert::assertTrue(true);
-    }
-
-    /**
      * @Given /^a SwaggerClient configuration$/
      */
     public function aSwaggerClientConfiguration()
