@@ -37,39 +37,6 @@ class ResourceListing extends SwaggerResponse
         //self::tryDeserializeProperty($instance, $json, 'authorizations', false, 'Guzzle\Swagger\Responses\Authorizations');
     }
 
-    protected static function tryDeserializeProperty($instance, $json, $property, $required = true, $class = null)
-    {
-        if (!array_key_exists($property, $json))
-        {
-            if ($required) {
-                throw new \Exception('Class Property not found on response');
-            }
-            return $instance;
-        }
-
-        if (!isset($class)){
-            $instance->$property = $json[$property];
-            return $instance;
-        }
-
-        // Check if class is an array
-        if (($temp = strlen($class) - strlen('[]')) >= 0 && strpos($class, '[]', $temp) !== FALSE) {
-            if (!is_array($json[$property])) {
-                throw new \Exception('Class Property is array, response is not');
-            }
-
-            $values = array();
-            foreach ($json[$property] as $element) {
-                $values[] = $json[$property];
-            }
-
-            $instance->$property = $values;
-
-        } else {
-            $instance->$property = $json[$property];
-        }
-    }
-
     public static function fromCommand(OperationCommand $command)
     {
         $instance = new self();
