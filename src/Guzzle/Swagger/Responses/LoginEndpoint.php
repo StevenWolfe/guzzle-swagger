@@ -5,7 +5,7 @@
  * Date: 2/27/15
  * Time: 12:51 PM
  */
-namespace Swagger;
+namespace Guzzle\Swagger\Responses;
 
 /**
  * Class LoginEndpoint
@@ -14,6 +14,6 @@ namespace Swagger;
  *
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#5110-login-endpoint-object
  */
-class LoginEndpoint
+class LoginEndpoint extends SwaggerResponse
 {
 }

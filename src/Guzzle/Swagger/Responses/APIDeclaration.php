@@ -5,7 +5,7 @@
  * Date: 2/27/15
  * Time: 12:51 PM
  */
-namespace Swagger;
+namespace Guzzle\Swagger\Responses;
 
 /**
  * Class APIDeclaration
@@ -23,6 +23,6 @@ namespace Swagger;
  *
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#52-api-declaration
  */
-class APIDeclaration
+class APIDeclaration extends SwaggerResponse
 {
 }

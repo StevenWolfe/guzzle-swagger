@@ -5,7 +5,7 @@
  * Date: 2/27/15
  * Time: 12:51 PM
  */
-namespace Swagger;
+namespace Guzzle\Swagger\Responses;
 
 /**
  * Class Operation
@@ -24,6 +24,6 @@ namespace Swagger;
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#523-operation-object
  *
  */
-class Operation
+class Operation extends SwaggerResponse
 {
 }

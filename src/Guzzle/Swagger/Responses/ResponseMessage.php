@@ -5,7 +5,7 @@
  * Date: 2/27/15
  * Time: 12:52 PM
  */
-namespace Swagger;
+namespace Guzzle\Swagger\Responses;
 
 /**
  * Class ResponseMessage
@@ -14,6 +14,6 @@ namespace Swagger;
  * @property string responseModel
  * @package MusicStoreLive\ReverbSDK\Swagger
  */
-class ResponseMessage
+class ResponseMessage extends SwaggerResponse
 {
 }

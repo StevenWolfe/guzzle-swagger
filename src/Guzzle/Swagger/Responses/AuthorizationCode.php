@@ -5,7 +5,7 @@
  * Date: 2/27/15
  * Time: 12:51 PM
  */
-namespace Swagger;
+namespace Guzzle\Swagger\Responses;
 
 /**
  * Class AuthorizationCode
@@ -15,6 +15,6 @@ namespace Swagger;
  *
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#519-authorization-code-object
  */
-class AuthorizationCode
+class AuthorizationCode extends SwaggerResponse
 {
 }

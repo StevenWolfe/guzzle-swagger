@@ -7,7 +7,7 @@
  */
 namespace Guzzle\Swagger\Responses;
 
-use Guzzle\Tests\Mock\CustomResponseModel;
+use Guzzle\Service\Command\ResponseClassInterface;
 use Guzzle\Service\Command\OperationCommand;
 
 /**
@@ -23,14 +23,18 @@ use Guzzle\Service\Command\OperationCommand;
  * @property Authorization[] $authorizations
  * @property OperationCommand $command
  */
-class ResourceListing extends CustomResponseModel
+class ResourceListing extends SwaggerResponse
 {
     /**
      * @param Array $json
      */
     protected static function deserialize($instance, $json) {
-        self::tryDeserializeProperty($instance, $json, 'swaggerVersion');
+        self::tryDeserializeProperty($instance, $json, 'swaggerVersion', true);
+        self::tryDeserializeProperty($instance, $json, 'apis', true, 'Guzzle\Swagger\Responses\Resource[]');
+        self::tryDeserializeProperty($instance, $json, 'apiVersion', false);
         self::tryDeserializeProperty($instance, $json, 'info', false, 'Guzzle\Swagger\Responses\Info');
+        // TODO: Throw exception if Authorizations encountered, it's not yet supported
+        //self::tryDeserializeProperty($instance, $json, 'authorizations', false, 'Guzzle\Swagger\Responses\Authorizations');
     }
 
     protected static function tryDeserializeProperty($instance, $json, $property, $required = true, $class = null)
@@ -49,29 +53,27 @@ class ResourceListing extends CustomResponseModel
         }
 
         // Check if class is an array
-        if (($temp = strlen($class) - strlen('[]')) >= 0 && strpos($class, '[]', $instance) !== FALSE) {
+        if (($temp = strlen($class) - strlen('[]')) >= 0 && strpos($class, '[]', $temp) !== FALSE) {
             if (!is_array($json[$property])) {
                 throw new \Exception('Class Property is array, response is not');
             }
 
             $values = array();
             foreach ($json[$property] as $element) {
-                $values[] = $class->deserialize($element);
+                $values[] = $json[$property];
             }
 
             $instance->$property = $values;
 
         } else {
-            $value = new $class();
-            $value->deserialize($json[$property]);
+            $instance->$property = $json[$property];
         }
     }
 
     public static function fromCommand(OperationCommand $command)
     {
-        $instance = new self($command);
-
-        $response = $instance->command->getResponse();
+        $instance = new self();
+        $response = $command->getResponse();
         //$result = $this->command->getResponseParser()->
         $json = $response->json();
         $instance->deserialize($instance, $json);

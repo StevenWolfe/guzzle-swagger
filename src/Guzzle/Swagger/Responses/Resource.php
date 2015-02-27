@@ -5,7 +5,7 @@
  * Date: 2/27/15
  * Time: 12:50 PM
  */
-namespace Swagger;
+namespace Guzzle\Swagger\Responses;
 
 /**
  * Class Resource
@@ -14,6 +14,6 @@ namespace Swagger;
  * @property string $path
  * @property string $description
  */
-class Resource
+class Resource extends SwaggerResponse
 {
 }

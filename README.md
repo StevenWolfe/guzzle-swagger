@@ -30,3 +30,4 @@ This library intends to follow a general BDD approach to development.  Behat is 
  - Grunt watch -- unit and features
  - Travis Build (?)
  - Research PSR-4 compliance
+ - Move Guzzle\Swagger\Responses classes to their own Swagger namespace without any Guzzle references
