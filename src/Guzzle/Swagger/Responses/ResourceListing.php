@@ -27,6 +27,14 @@ class ResourceListing extends SwaggerResponse
 {
     public $swaggerVersion;
 
+    public $apis;
+
+    public $apiVersion;
+
+    public $info;
+
+    public $authorizations;
+
     /**
      * @param Array $json
      */

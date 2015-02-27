@@ -171,16 +171,21 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Given /^the result must have a swaggerVersion property$/
+     * @Given /^the result (may|must) have (a|an) ([^"]*) property$/
      */
-    public function theResultMustHaveASwaggerVersionProperty()
+    public function theResultMustHaveASwaggerVersionProperty($required, $a, $property)
     {
         if (!isset($this->result) || !$this->result instanceof ResourceListing){
-            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerResponse');
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a ResourceListing result');
         }
 
-        $constraint = new PHPUnit_Framework_Constraint_ClassHasProperty('swaggerVersion');
-        PHPUnit_Framework_Assert::assertThat($this->result, $constraint, 'The ResourceListing did not have the required swaggerVersion property.');
+        $constraint = new PHPUnit_Framework_Constraint_ClassHasProperty($property);
+        PHPUnit_Framework_Assert::assertThat($this->result, $constraint, 'The ResourceListing did not have the required ' . $property . ' property.  The property cannot declared via a PHPDoc.');
+        if ($required == "must")
+        {
+            $value = $this->result->$property;
+            PHPUnit_Framework_Assert::assertNotEmpty($value, 'The ResourceListing did not a value for it\'s '. $property . ' property');
+        }
     }
 }
 
@@ -199,12 +204,7 @@ class PHPUnit_Framework_Constraint_ClassHasProperty extends PHPUnit_Framework_Co
         $class = new ReflectionClass($other);
 
         $property = $this->attributeName;
-        if ($class->hasProperty($property)) {
-            $value = $other->$property;
-            return isset($value);
-        } else {
-            return FALSE;
-        }
+        return $class->hasProperty($property);
     }
 
     /**
