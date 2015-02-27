@@ -6,6 +6,7 @@
  * Time: 12:51 PM
  */
 namespace Swagger;
+
 /**
  * Class APIDeclaration
  * @property string swaggerVersion

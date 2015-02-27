@@ -6,6 +6,7 @@
  * Time: 12:49 PM
  */
 namespace Swagger;
+
 /**
  * Class ResourceListing
  * @package MusicStoreLive\ReverbSDK\Swagger

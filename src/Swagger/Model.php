@@ -6,6 +6,7 @@
  * Time: 12:52 PM
  */
 namespace Swagger;
+
 /**
  * Class Model
  * @property string id

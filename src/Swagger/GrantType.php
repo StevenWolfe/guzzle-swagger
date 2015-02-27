@@ -6,6 +6,7 @@
  * Time: 12:51 PM
  */
 namespace Swagger;
+
 /**
  * Class GrantType
  * @property Implicit implicit
