@@ -77,6 +77,11 @@ class FeatureContext extends BehatContext
      */
     public function iShouldReceiveASwaggerClient()
     {
+        if ($this->exception)
+        {
+            PHPUnit_Framework_Assert::fail("An exception was thrown during factory construction:\n" . $this->exception->getMessage());
+        }
+
         PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\SwaggerClient', $this->client);
     }
 

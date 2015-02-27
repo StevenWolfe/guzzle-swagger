@@ -5,6 +5,7 @@ namespace Guzzle\Swagger;
 use Exception;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
+use Guzzle\Service\Description\ServiceDescription;
 
 class SwaggerClient extends Client
 {
@@ -26,6 +27,9 @@ class SwaggerClient extends Client
 
         // Build the client
         $client = new self($config->get('base_url'), $config);
+
+        // Load Guzzle Service Descriptions
+        $service = ServiceDescription::factory(__DIR__ . '/swaggerclient.json');
 
         // Setup subscribers
         // none yet

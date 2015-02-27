@@ -1,0 +1,13 @@
+{
+  "name": "Swagger Resource Listing",
+  "apiVersion": "1.2",
+  "description": "Swagger Resource Listing",
+  "operations": {
+    "getResourceListing" :{
+      "summary": "Get Swagger Resource Listing",
+      "httpMethod": "GET",
+      "responseType": "class",
+      "responseClass": "Swagger\\ResourceListing"
+    }
+  }
+}
