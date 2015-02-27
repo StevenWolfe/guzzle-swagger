@@ -2,17 +2,17 @@
 
 namespace Guzzle\Swagger;
 
-use Exception;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
-use Swagger\ResourceListing;
+use Guzzle\Swagger\Responses\APIDeclaration;
+use Guzzle\Swagger\Responses\Resource;
+use Guzzle\Swagger\Responses\ResourceListing;
+use Guzzle\Swagger\Responses\SwaggerResponse;
 
 /**
  * Class SwaggerClient
  * @package Guzzle\Swagger
- *
- * @method ResourceListing getResourceListing
  */
 class SwaggerClient extends Client
 {
@@ -43,5 +43,28 @@ class SwaggerClient extends Client
         // none yet
 
         return $client;
+    }
+
+    /**
+     * @param string $path
+     * @return ResourceListing
+     */
+    public function getResourceListing($path = '/api-docs')
+    {
+        $args = array('path' => $path);
+
+        $command = $this->getCommand('getResourceListing', $args);
+        return $command->execute();
+    }
+
+    /**
+     * @param Resource $resource
+     * @return APIDeclaration
+     */
+    public function getAPIDeclaration(Resource $resource) {
+        $args = array('path' => $resource->path);
+
+        $command = $this->getCommand('getAPIDeclaration', $args);
+        return $command->execute();
     }
 }

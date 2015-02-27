@@ -4,11 +4,28 @@
   "description": "Swagger Resource Listing",
   "operations": {
     "getResourceListing" :{
-      "uri": "",
-      "summary": "Get Swagger Resource Listing",
+      "uri": "{path}",
+      "summary": "Get Resource Listing",
       "httpMethod": "GET",
       "responseType": "class",
-      "responseClass": "Guzzle\\Swagger\\Responses\\ResourceListing"
+      "responseClass": "Guzzle\\Swagger\\Responses\\ResourceListing",
+      "parameters": {
+        "path": {
+          "location": "uri"
+        }
+      }
+    },
+    "getAPIDeclaration": {
+      "uri": "{path}",
+      "summary": "Get API Declaration",
+      "httpMethod": "GET",
+      "responseType": "class",
+      "responseClass": "Guzzle\\Swagger\\Responses\\APIDeclaration",
+      "parameters": {
+        "path": {
+          "location": "uri"
+        }
+      }
     }
   }
 }

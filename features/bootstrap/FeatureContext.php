@@ -54,7 +54,7 @@ class FeatureContext extends BehatContext
         }
 
         $this->config['base_url'] = 'http://example.org/api-docs';
-        $this->config['base_url'] = 'http://reverb.com/api/doc';
+        $this->config['base_url'] = 'http://reverb.com/api';
 
         $is_valid = (bool) filter_var($this->config['base_url'], FILTER_VALIDATE_URL);
         PHPUnit_Framework_Assert::assertTrue($is_valid, 'The URL setup by this step is not valid');
@@ -150,19 +150,53 @@ class FeatureContext extends BehatContext
     /**
      * @When /^getResourceListing is called$/
      */
-    public function getresourcelistingIsCalled()
+    public function getResourcelistingIsCalled()
+    {
+        if (!isset($this->client)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerClient');
+        }
+        // Reset, just to be safe
+        $this->result = null;
+        $this->exception = null;
+
+        try {
+            $this->result = $this->client->getResourceListing('doc');
+        } catch (Exception $ex) {
+            $this->exception = $ex;
+        }
+    }
+
+    /**
+     * @When /^getAPIDeclaration is called$/
+     */
+    public function getAPIdeclarationIsCalled()
     {
         if (!isset($this->client)){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerClient');
         }
 
-        $this->result = $this->client->getResourceListing();
+        $this->theResourceListingHasResources();
+
+        /** @var Resource[] $resources */
+        $resources = $this->result->apis;
+        foreach ($resources as $resource) {
+            // Reset these, just in case
+            $this->result = null;
+            $this->exception = null;
+
+            try {
+                $this->result = $this->client->getAPIDeclaration($resource);
+            } catch (Exception $ex) {
+                $this->exception = $ex;
+            }
+            break; // Just do one for now
+        }
     }
 
     /**
-     * @Then /^the result should be a ResourceListing$/
+     * @Then /^the result is an instance of ([^"]*)$/
      */
-    public function theResultShouldBeAResourceListing()
+    public function theResultShouldBeAResourceListing($class)
     {
         if (!isset($this->result)){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerResponse');
@@ -175,10 +209,9 @@ class FeatureContext extends BehatContext
     /**
      * @Given /^the result (may|must) have (a|an) ([^"]*) property$/
      * @param bool $required
-     * @param null $a
      * @param string $property
      */
-    public function theResultHasProperty($required, $a = null, $property)
+    public function theResultHasProperty($required, $a, $property)
     {
         if (!isset($this->result) || !$this->result instanceof ResourceListing){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a ResourceListing result');
@@ -209,6 +242,30 @@ class FeatureContext extends BehatContext
         foreach ($property as $value) {
             // TODO: Add message
             PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\Responses\Resource', $value);
+        }
+    }
+
+    /**
+     * @Given /^a ResourceListing$/
+     */
+    public function aResourceListing()
+    {
+        $this->aSwaggerClient();
+        $this->getResourcelistingIsCalled();
+    }
+
+    /**
+     * @Given /^the ResourceListing has Resources$/
+     */
+    public function theResourceListingHasResources()
+    {
+        if (!isset($this->result) || !$this->result instanceof ResourceListing){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a ResourceListing result');
+        }
+
+        /** @var ResourceListing $this->result */
+        if (empty($this->result->apis)) {
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without Resources in the ResourceListing');
         }
     }
 }
