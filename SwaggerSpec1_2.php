@@ -1,6 +1,6 @@
 <?php
 
-namespace MusicStoreLive\ReverbSDK\Swagger;
+namespace Swagger;
 
 /**
  * Class ResourceListing

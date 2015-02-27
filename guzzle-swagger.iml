@@ -88,5 +88,6 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="guzzle-swagger node_modules" level="project" />
   </component>
 </module>
