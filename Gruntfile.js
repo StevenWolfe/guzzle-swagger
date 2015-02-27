@@ -44,7 +44,11 @@ module.exports = function (grunt) {
         },
         behat: {
             features: {
-                options:{},
+                options:{
+                    output: true,
+                    //failOnUndefined: false,
+                    //failOnFailed: false
+                },
                 cmd: 'vendor/bin/behat',
                 features: 'features/'
             }

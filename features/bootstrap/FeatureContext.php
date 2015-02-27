@@ -15,7 +15,9 @@ require_once 'vendor/autoload.php';
  */
 class FeatureContext extends BehatContext
 {
-    private $config, $client, $exception;
+    private $config, $client;
+    /** @var  Exception $exception */
+    private $exception;
 
     /**
      * Initializes context.
@@ -59,8 +61,8 @@ class FeatureContext extends BehatContext
     public function iCallSwaggerClientFactory()
     {
         // Reset these, just to be safe
-        unset($this->client);
-        unset($this->exception);
+        $this->client = null;
+        $this->exception = null;
 
         $config = $this->config;
         try {
@@ -95,7 +97,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldReceiveAnError()
     {
-        throw new PendingException();
+        PHPUnit_Framework_Assert::assertNotNull($this->exception, 'An exception was expected, but was not thrown');
     }
 
     /**
@@ -103,7 +105,8 @@ class FeatureContext extends BehatContext
      */
     public function theErrorShouldStateThatABase_urlIsRequired()
     {
-        throw new PendingException();
+        PHPUnit_Framework_Assert::assertStringStartsWith('Config is missing the following keys:', $this->exception->getMessage(),  'The received exception does not have the expected message');
+        PHPUnit_Framework_Assert::assertTrue(strpos($this->exception->getMessage(), 'base_url') >= 0);
     }
 
     /**
