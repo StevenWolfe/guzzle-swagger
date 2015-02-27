@@ -88,6 +88,7 @@ class FeatureContext extends BehatContext
             PHPUnit_Framework_Assert::fail("An exception was thrown during factory construction:\n" . $this->exception->getMessage());
         }
 
+        // TODO: Add message
         PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\SwaggerClient', $this->client);
     }
 
@@ -167,13 +168,17 @@ class FeatureContext extends BehatContext
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerResponse');
         }
 
+        // TODO: Add message
         PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\Responses\ResourceListing', $this->result );
     }
 
     /**
      * @Given /^the result (may|must) have (a|an) ([^"]*) property$/
+     * @param bool $required
+     * @param null $a
+     * @param string $property
      */
-    public function theResultMustHaveASwaggerVersionProperty($required, $a, $property)
+    public function theResultHasProperty($required, $a = null, $property)
     {
         if (!isset($this->result) || !$this->result instanceof ResourceListing){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a ResourceListing result');
@@ -185,6 +190,25 @@ class FeatureContext extends BehatContext
         {
             $value = $this->result->$property;
             PHPUnit_Framework_Assert::assertNotEmpty($value, 'The ResourceListing did not a value for it\'s '. $property . ' property');
+        }
+    }
+
+    /**
+     * @Given /^the result's apis property must be an array of Resources$/
+     */
+    public function theResultHasArrayOfClass()
+    {
+        if (!isset($this->result) || !$this->result instanceof ResourceListing){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a ResourceListing result');
+        }
+
+        $this->theResultHasProperty(true, null, 'apis');
+        $property = $this->result->apis;
+
+        PHPUnit_Framework_Assert::isTrue(is_array($property), 'The ResourceListing apis property must be an array.');
+        foreach ($property as $value) {
+            // TODO: Add message
+            PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\Responses\Resource', $value);
         }
     }
 }
