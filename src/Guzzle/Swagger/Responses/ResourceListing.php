@@ -25,6 +25,8 @@ use Guzzle\Service\Command\OperationCommand;
  */
 class ResourceListing extends SwaggerResponse
 {
+    public $swaggerVersion;
+
     /**
      * @param Array $json
      */

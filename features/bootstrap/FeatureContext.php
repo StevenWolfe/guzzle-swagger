@@ -1,11 +1,8 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+use Behat\Behat\Context\BehatContext;
+use Guzzle\Swagger\Responses\ResourceListing;
+use Guzzle\Swagger\Responses\SwaggerResponse;
 use Guzzle\Swagger\SwaggerClient;
 
 require_once 'vendor/autoload.php';
@@ -23,6 +20,9 @@ class FeatureContext extends BehatContext
 
     /** @var  Exception $exception */
     private $exception;
+
+    /** @var  SwaggerResponse $result */
+    private $result;
 
     /**
      * Initializes context.
@@ -159,14 +159,66 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^a ResourceListing should be returned$/
+     * @Then /^the result should be a ResourceListing$/
      */
-    public function aResourceListingShouldBeReturned()
+    public function theResultShouldBeAResourceListing()
     {
-        if (!isset($this->client)){
-            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerClient');
+        if (!isset($this->result)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerResponse');
         }
 
         PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\Responses\ResourceListing', $this->result );
+    }
+
+    /**
+     * @Given /^the result must have a swaggerVersion property$/
+     */
+    public function theResultMustHaveASwaggerVersionProperty()
+    {
+        if (!isset($this->result) || !$this->result instanceof ResourceListing){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerResponse');
+        }
+
+        $constraint = new PHPUnit_Framework_Constraint_ClassHasProperty('swaggerVersion');
+        PHPUnit_Framework_Assert::assertThat($this->result, $constraint, 'The ResourceListing did not have the required swaggerVersion property.');
+    }
+}
+
+class PHPUnit_Framework_Constraint_ClassHasProperty extends PHPUnit_Framework_Constraint_ClassHasAttribute
+{
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns TRUE if the
+     * constraint is met, FALSE otherwise.
+     *
+     * @param mixed $other Value or object to evaluate.
+     * @return bool
+     */
+    protected function matches($other)
+    {
+        $class = new ReflectionClass($other);
+
+        $property = $this->attributeName;
+        if ($class->hasProperty($property)) {
+            $value = $other->$property;
+            return isset($value);
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string
+     * @since  Method available since Release 3.3.0
+     */
+    public function toString()
+    {
+        return sprintf(
+            'has property "%s"',
+
+            $this->attributeName
+        );
     }
 }
