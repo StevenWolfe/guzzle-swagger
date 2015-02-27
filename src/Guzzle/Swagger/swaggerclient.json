@@ -4,6 +4,7 @@
   "description": "Swagger Resource Listing",
   "operations": {
     "getResourceListing" :{
+      "uri": "",
       "summary": "Get Swagger Resource Listing",
       "httpMethod": "GET",
       "responseType": "class",

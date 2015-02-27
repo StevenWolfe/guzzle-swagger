@@ -6,7 +6,14 @@ use Exception;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
+use Swagger\ResourceListing;
 
+/**
+ * Class SwaggerClient
+ * @package Guzzle\Swagger
+ *
+ * @method ResourceListing getResourceListing
+ */
 class SwaggerClient extends Client
 {
     public static function factory($config = array())
@@ -30,6 +37,7 @@ class SwaggerClient extends Client
 
         // Load Guzzle Service Descriptions
         $service = ServiceDescription::factory(__DIR__ . '/swaggerclient.json');
+        $client->setDescription($service);
 
         // Setup subscribers
         // none yet

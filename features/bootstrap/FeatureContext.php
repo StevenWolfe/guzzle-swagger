@@ -15,7 +15,12 @@ require_once 'vendor/autoload.php';
  */
 class FeatureContext extends BehatContext
 {
-    private $config, $client;
+    /** @var  Array $config */
+    private $config;
+
+    /** @var  SwaggerClient $client */
+    private $client;
+
     /** @var  Exception $exception */
     private $exception;
 
@@ -128,5 +133,35 @@ class FeatureContext extends BehatContext
         $is_valid = (bool) filter_var($this->config['base_url'], FILTER_VALIDATE_URL);
         PHPUnit_Framework_Assert::assertFalse($is_valid, 'The URL setup by this step should not be valid');
         PHPUnit_Framework_Assert::assertArrayHasKey('base_url', $this->config, 'The step failed to set a base_url on the configuration');
+    }
+
+    /**
+     * @Given /^a SwaggerClient$/
+     */
+    public function aSwaggerClient()
+    {
+        $this->aSwaggerClientConfiguration();
+        $this->theConfigurationHasAValidBase_url();
+        $this->iCallSwaggerClientFactory();
+    }
+
+    /**
+     * @When /^getResourceListing is called$/
+     */
+    public function getresourcelistingIsCalled()
+    {
+        if (is_null($this->client)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerClient');
+        }
+
+        $this->result = $this->client->getResourceListing();
+    }
+
+    /**
+     * @Then /^a ResourceListing should be returned$/
+     */
+    public function aResourceListingShouldBeReturned()
+    {
+        throw new PendingException();
     }
 }

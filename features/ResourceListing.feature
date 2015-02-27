@@ -3,4 +3,7 @@ Feature: Resource Listings
   As a Library consumer
   I want to interact with Swagger Resource Listings
 
-  Scenario:
+  Scenario: Get Resource Listing
+    Given a SwaggerClient
+    When getResourceListing is called
+    Then a ResourceListing should be returned
