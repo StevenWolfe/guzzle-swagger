@@ -4,6 +4,7 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-behat": "^0.2.0",
     "grunt-contrib-watch": "~0.4.0",
     "grunt-phpcs": "~0.2.0",
     "grunt-phplint": "0.0.5",

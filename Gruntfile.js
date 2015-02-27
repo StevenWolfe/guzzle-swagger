@@ -41,6 +41,13 @@ module.exports = function (grunt) {
                 colors: true,
                 noGlobalsBackup: false
             }
+        },
+        behat: {
+            features: {
+                options:{},
+                cmd: 'vendor/bin/behat',
+                features: 'features/'
+            }
         }
     });
 
@@ -48,8 +55,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-phplint');
     grunt.loadNpmTasks('grunt-phpcs');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-behat');
 
-    grunt.registerTask('default', ['phplint', 'phpcs', 'phpunit']);
+    grunt.registerTask('default', ['phplint', 'phpcs', 'phpunit', 'behat']);
     grunt.registerTask('livereload', ['default', 'watch']);
 
 };
