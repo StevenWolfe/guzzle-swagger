@@ -19,6 +19,6 @@ namespace Guzzle\Swagger\Responses;
  * @property string $license
  * @property string $licenseUrl;
  */
-class Info extends SwaggerResponse
+class Info
 {
 }

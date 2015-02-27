@@ -6,6 +6,7 @@
  * Time: 12:50 PM
  */
 namespace Guzzle\Swagger\Responses;
+use Guzzle\Service\Command\OperationCommand;
 
 /**
  * Class Resource
@@ -14,6 +15,17 @@ namespace Guzzle\Swagger\Responses;
  * @property string $path
  * @property string $description
  */
-class Resource extends SwaggerResponse
+class Resource implements ISwaggerResponse
 {
+    /**
+     * @param $command
+     * @param $instance
+     * @param $json
+     */
+    function deserialize($command, $instance, $json)
+    {
+        // TODO: Implement deserialize() method.
+        SwaggerResponse::tryDeserializeProperty($command, $instance, $json, 'path', true);
+        SwaggerResponse::tryDeserializeProperty($command, $instance, $json, 'description', false);
+    }
 }

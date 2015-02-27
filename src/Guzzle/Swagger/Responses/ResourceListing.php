@@ -28,11 +28,11 @@ class ResourceListing extends SwaggerResponse
     /**
      * @param Array $json
      */
-    protected static function deserialize($instance, $json) {
-        self::tryDeserializeProperty($instance, $json, 'swaggerVersion', true);
-        self::tryDeserializeProperty($instance, $json, 'apis', true, 'Guzzle\Swagger\Responses\Resource[]');
-        self::tryDeserializeProperty($instance, $json, 'apiVersion', false);
-        self::tryDeserializeProperty($instance, $json, 'info', false, 'Guzzle\Swagger\Responses\Info');
+    function deserialize($command, $instance, $json) {
+        self::tryDeserializeProperty($command, $instance, $json, 'swaggerVersion', true);
+        self::tryDeserializeProperty($command, $instance, $json, 'apis', true, 'Guzzle\Swagger\Responses\Resource[]');
+        self::tryDeserializeProperty($command, $instance, $json, 'apiVersion', false);
+        self::tryDeserializeProperty($command, $instance, $json, 'info', false, 'Guzzle\Swagger\Responses\Info');
         // TODO: Throw exception if Authorizations encountered, it's not yet supported
         //self::tryDeserializeProperty($instance, $json, 'authorizations', false, 'Guzzle\Swagger\Responses\Authorizations');
     }
@@ -41,9 +41,8 @@ class ResourceListing extends SwaggerResponse
     {
         $instance = new self();
         $response = $command->getResponse();
-        //$result = $this->command->getResponseParser()->
         $json = $response->json();
-        $instance->deserialize($instance, $json);
+        $instance->deserialize($command, $instance, $json);
 
         return $instance;
     }

@@ -24,6 +24,6 @@ namespace Guzzle\Swagger\Responses;
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#523-operation-object
  *
  */
-class Operation extends SwaggerResponse
+class Operation
 {
 }

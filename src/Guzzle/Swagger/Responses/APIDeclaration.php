@@ -23,6 +23,6 @@ namespace Guzzle\Swagger\Responses;
  *
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#52-api-declaration
  */
-class APIDeclaration extends SwaggerResponse
+class APIDeclaration
 {
 }

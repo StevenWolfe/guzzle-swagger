@@ -16,6 +16,6 @@ namespace Guzzle\Swagger\Responses;
  *
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#5111-token-request-endpoint-object
  */
-class TokenRequestEndpoint extends SwaggerResponse
+class TokenRequestEndpoint
 {
 }

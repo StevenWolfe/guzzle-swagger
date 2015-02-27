@@ -14,6 +14,6 @@ namespace Guzzle\Swagger\Responses;
  * @property string responseModel
  * @package MusicStoreLive\ReverbSDK\Swagger
  */
-class ResponseMessage extends SwaggerResponse
+class ResponseMessage
 {
 }

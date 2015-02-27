@@ -15,6 +15,6 @@ namespace Guzzle\Swagger\Responses;
  *
  * @see https://github.com/swagger-api/swagger-spec/blob/master/versions/1.2.md#519-authorization-code-object
  */
-class AuthorizationCode extends SwaggerResponse
+class AuthorizationCode
 {
 }
