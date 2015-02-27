@@ -54,6 +54,7 @@ class FeatureContext extends BehatContext
         }
 
         $this->config['base_url'] = 'http://example.org/api-docs';
+        $this->config['base_url'] = 'http://reverb.com/api/doc';
 
         $is_valid = (bool) filter_var($this->config['base_url'], FILTER_VALIDATE_URL);
         PHPUnit_Framework_Assert::assertTrue($is_valid, 'The URL setup by this step is not valid');
@@ -95,7 +96,7 @@ class FeatureContext extends BehatContext
      */
     public function theConfigurationDoesNotHaveABase_url()
     {
-        if (is_null($this->config)){
+        if (!isset($this->config)){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a configuration object');
         }
 
@@ -124,7 +125,7 @@ class FeatureContext extends BehatContext
      */
     public function theConfigurationHasAnInvalidBase_url()
     {
-        if (is_null($this->config)){
+        if (!isset($this->config)){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a configuration object');
         }
 
@@ -150,7 +151,7 @@ class FeatureContext extends BehatContext
      */
     public function getresourcelistingIsCalled()
     {
-        if (is_null($this->client)){
+        if (!isset($this->client)){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerClient');
         }
 
@@ -162,6 +163,10 @@ class FeatureContext extends BehatContext
      */
     public function aResourceListingShouldBeReturned()
     {
-        throw new PendingException();
+        if (!isset($this->client)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerClient');
+        }
+
+        PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\Responses\ResourceListing', $this->result );
     }
 }

@@ -16,7 +16,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Guzzle\\Swagger": "src/"
+          "Guzzle\\Swagger": "src/",
+          "Swagger": "src/"
         }
     }
 }

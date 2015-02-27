@@ -8,7 +8,7 @@
       "summary": "Get Swagger Resource Listing",
       "httpMethod": "GET",
       "responseType": "class",
-      "responseClass": "Swagger\\ResourceListing"
+      "responseClass": "Guzzle\\Swagger\\Responses\\ResourceListing"
     }
   }
 }
