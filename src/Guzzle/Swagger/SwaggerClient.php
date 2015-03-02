@@ -4,6 +4,7 @@ namespace Guzzle\Swagger;
 
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
+use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Swagger\Plugin\PathEncodingPlugin;
 use Guzzle\Swagger\Responses\APIDeclaration;
@@ -57,7 +58,9 @@ class SwaggerClient extends Client
         $args = array('path' => $path);
 
         $command = $this->getCommand('getResourceListing', $args);
-        return $command->execute();
+        /** @var ResourceListing $result */
+        $result = $command->execute();
+        return $result;
     }
 
     /**
@@ -65,10 +68,18 @@ class SwaggerClient extends Client
      * @return APIDeclaration
      */
     public function getAPIDeclaration(Resource $resource) {
-        $args = array('path' => $resource->path);
-
-        $command = $this->getCommand('getAPIDeclaration', $args);
-        //$command->getRequest()->getQuery()->useUrlEncoding(false);
+        $command = $this->getAPIDeclarationCommand($resource);
         return $command->execute();
+    }
+
+    /**
+     * @param $resource
+     * @return \Guzzle\Service\Command\CommandInterface|null
+     */
+    private function getAPIDeclarationCommand($resource)
+    {
+        $args = array('path' => $resource->path);
+        $command = $this->getCommand('getAPIDeclaration', $args);
+        return $command;
     }
 }

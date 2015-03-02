@@ -10,7 +10,7 @@ use Guzzle\Service\Command\OperationCommand;
 
 /**
  * Class Operation
- * @property string method
+ * @property string httpMethod
  * @property string summary
  * @property string notes
  * @property string nickname
@@ -27,7 +27,7 @@ use Guzzle\Service\Command\OperationCommand;
  */
 class Operation extends SwaggerResponse
 {
-    public $method;
+    public $httpMethod;
     public $summary;
     public $notes;
     public $nickname;

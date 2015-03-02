@@ -17,6 +17,9 @@ use Guzzle\Service\Command\OperationCommand;
  */
 class Resource implements ISwaggerResponse
 {
+    public $path;
+    public $description;
+
     /**
      * @param $command
      * @param $instance

@@ -6,7 +6,9 @@
  * Time: 12:51 PM
  */
 namespace Guzzle\Swagger\Responses;
+use Guzzle\Service\ClientInterface;
 use Guzzle\Service\Command\OperationCommand;
+use Guzzle\Service\Description\ServiceDescription;
 
 /**
  * Class APIDeclaration
@@ -26,6 +28,8 @@ use Guzzle\Service\Command\OperationCommand;
  */
 class APIDeclaration extends SwaggerResponse
 {
+    // TODO: URI, client aren't part of the swagger spec, refactor it away or add notes/docs
+    public $uri, $client;
     public $swaggerVersion;
     public $apiVersion;
     public $basePath;
@@ -60,7 +64,24 @@ class APIDeclaration extends SwaggerResponse
         $response = $command->getResponse();
         $json = $response->json();
         $instance->deserialize($command, $instance, $json);
+        $instance->client = $command->getClient();
+        $instance->uri = $command->getRequest()->getUrl(true);
 
         return $instance;
+    }
+
+    /**
+     * @param ClientInterface $client
+     * @return ServiceDescription
+     */
+    public function getServiceDescription(ClientInterface $client) {
+
+
+        $service = new ServiceDescription(array(
+            //'name' => $listing->info ? $listing->info->title : null,
+            //'summary' => $listing->info ? $listing->info->description : null,
+            //'apiVersion' => $listing->apiVersion,
+            'baseUrl' => $client->getConfig('base_url') // TODO: Get this from the listing--or get the listing from the client
+        ));
     }
 }

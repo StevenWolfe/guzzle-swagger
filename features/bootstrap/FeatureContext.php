@@ -41,6 +41,14 @@ class FeatureContext extends BehatContext
     public function aSwaggerClientConfiguration()
     {
         $this->config = array();
+
+        $this->config = array(
+            'request.options' => array(
+                'proxy' => 'tcp://10.2.10.77:8888',
+                'verify' => false
+            )
+        );
+
         PHPUnit_Framework_Assert::assertNotNull($this->config, 'Setup Failed: The config variable should not be null');
     }
 
@@ -190,6 +198,29 @@ class FeatureContext extends BehatContext
                 $this->exception = $ex;
             }
             break; // Just do one for now
+        }
+    }
+
+    /**
+     * @When /^getServiceClient is called$/
+     */
+    public function getServiceClientIsCalled()
+    {
+        if (!isset($this->client)){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerClient');
+        }
+
+        // TODO: Add a guard
+        /** @var ResourceListing $resourceListing */
+        $resourceListing = $this->result;
+
+        $this->theResourceListingHasResources();
+
+        // TODO: Review the setup above, copy/pasted without much review
+        try {
+            $this->result = $resourceListing->getAPIDeclaration();
+        } catch (Exception $ex) {
+            $this->exception = $ex;
         }
     }
 
