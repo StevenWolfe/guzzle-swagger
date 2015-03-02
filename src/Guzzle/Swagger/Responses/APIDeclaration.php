@@ -26,6 +26,16 @@ use Guzzle\Service\Command\OperationCommand;
  */
 class APIDeclaration extends SwaggerResponse
 {
+    public $swaggerVersion;
+    public $apiVersion;
+    public $basePath;
+    public $resourcePath;
+    public $apis;
+    public $models;
+    public $produces;
+    public $consumes;
+    public $authorizations;
+
     /**
      * @param Array $json
      */

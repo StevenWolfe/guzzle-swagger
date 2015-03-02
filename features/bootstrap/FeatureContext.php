@@ -217,16 +217,16 @@ class FeatureContext extends BehatContext
      */
     public function theResultHasProperty($required, $a, $property)
     {
-        if (!isset($this->result) || !$this->result instanceof ResourceListing){
-            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a ResourceListing result');
+        if (!isset($this->result) || !$this->result instanceof SwaggerResponse){
+            PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerResponse result');
         }
 
         $constraint = new PHPUnit_Framework_Constraint_ClassHasProperty($property);
-        PHPUnit_Framework_Assert::assertThat($this->result, $constraint, 'The ResourceListing did not have the required ' . $property . ' property.  The property cannot declared via a PHPDoc.');
+        PHPUnit_Framework_Assert::assertThat($this->result, $constraint, 'The SwaggerResponse did not have the required ' . $property . ' property.  The property cannot declared via a PHPDoc.');
         if ($required == "must")
         {
             $value = $this->result->$property;
-            PHPUnit_Framework_Assert::assertNotEmpty($value, 'The ResourceListing did not a value for it\'s '. $property . ' property');
+            PHPUnit_Framework_Assert::assertNotEmpty($value, 'The SwaggerResponse did not a value for it\'s '. $property . ' property');
         }
     }
 
