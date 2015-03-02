@@ -7,7 +7,6 @@
  */
 namespace Guzzle\Swagger\Responses;
 
-use Guzzle\Service\Command\ResponseClassInterface;
 use Guzzle\Service\Command\OperationCommand;
 
 /**

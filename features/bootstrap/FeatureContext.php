@@ -196,14 +196,18 @@ class FeatureContext extends BehatContext
     /**
      * @Then /^the result is an instance of ([^"]*)$/
      */
-    public function theResultShouldBeAResourceListing($class)
+    public function theResultShouldBeAnInstanceOf($class)
     {
         if (!isset($this->result)){
             PHPUnit_Framework_Assert::markTestSkipped('Cannot continue test without a SwaggerResponse');
         }
 
+        if (!strpos($class, '\\')) {
+            $class = 'Guzzle\Swagger\Responses\\' . $class;
+        }
+
         // TODO: Add message
-        PHPUnit_Framework_Assert::assertInstanceOf('Guzzle\Swagger\Responses\ResourceListing', $this->result );
+        PHPUnit_Framework_Assert::assertInstanceOf($class, $this->result );
     }
 
     /**

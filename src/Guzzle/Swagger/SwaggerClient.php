@@ -5,6 +5,7 @@ namespace Guzzle\Swagger;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
+use Guzzle\Swagger\Plugin\PathEncodingPlugin;
 use Guzzle\Swagger\Responses\APIDeclaration;
 use Guzzle\Swagger\Responses\Resource;
 use Guzzle\Swagger\Responses\ResourceListing;
@@ -40,7 +41,9 @@ class SwaggerClient extends Client
         $client->setDescription($service);
 
         // Setup subscribers
-        // none yet
+        $encodingPlugin = new PathEncodingPlugin();
+        $client->addSubscriber($encodingPlugin);
+
 
         return $client;
     }
@@ -65,6 +68,7 @@ class SwaggerClient extends Client
         $args = array('path' => $resource->path);
 
         $command = $this->getCommand('getAPIDeclaration', $args);
+        //$command->getRequest()->getQuery()->useUrlEncoding(false);
         return $command->execute();
     }
 }
